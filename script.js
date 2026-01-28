@@ -26,6 +26,24 @@ async function search() {
   const data = await response.json();
   console.log("Azure response:", data);
 
-  document.getElementById("results").textContent =
-    JSON.stringify(data.value, null, 2);
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+data.value.forEach(item => {
+  const policy = item.content[0];
+
+  const div = document.createElement("div");
+  div.style.border = "1px solid #ccc";
+  div.style.padding = "10px";
+  div.style.marginBottom = "10px";
+
+  div.innerHTML = `
+    <h3>${policy.title}</h3>
+    <p>${policy.content}</p>
+    <strong>Category:</strong> ${policy.category}
+  `;
+
+  resultsDiv.appendChild(div);
+});
+
 }
